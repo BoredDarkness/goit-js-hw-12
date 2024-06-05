@@ -44,7 +44,7 @@ document.querySelector('.load-more').addEventListener('click', async () => {
     if (data.totalHits <= currentPage * 15) {
       iziToast.info({
         title: 'info',
-        message: 'Weare sorry, but you`ve reached the end of search result.',
+        message: 'We are sorry, but you`ve reached the end of search result.',
         position: 'topRight'
       });
     }
