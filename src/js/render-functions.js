@@ -5,9 +5,13 @@ import "izitoast/dist/css/iziToast.min.css";
 
 let lightbox;
 
-export function renderImages(images) {
-  const gallery = document.querySelector('.gallery')
-  gallery.innerHTML = images.map(image => `
+export function renderImages(images, isNewQuery) {
+  const gallery = document.querySelector('.gallery');
+  const prevHeight = gallery.clientHeight;
+  if (isNewQuery) {
+    gallery.innerHTML = '';
+  }
+  gallery.innerHTML += images.map(image => `
     <a href="${image.largeImageURL}" class="gallery-item">
       <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy">
       <div class="info">
@@ -27,6 +31,11 @@ export function renderImages(images) {
   } else {
     lightbox.refresh();
   }
+  const newHeight = gallery.clientHeight;
+  window.scrollBy({
+    top: newHeight - prevHeight,
+    behavior: 'smooth'
+  });
 }
 
 export function showError(message) {
@@ -52,4 +61,13 @@ export function hideLoader() {
   setTimeout(() => {
     document.querySelector('.div-loader').classList.add('hidden');
   },2000);
+}
+
+export function toggleLoadMoreButton(show) {
+  const loadMoreButton = document.querySelector('.load-more');
+  if (show) {
+    loadMoreButton.classList.remove('hidden');
+  } else {
+loadMoreButton.classList.add('hidden')
+  }
 }
