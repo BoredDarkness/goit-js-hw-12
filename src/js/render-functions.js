@@ -8,10 +8,12 @@ let lightbox;
 export function renderImages(images, isNewQuery) {
   const gallery = document.querySelector('.gallery');
   const prevHeight = gallery.clientHeight;
+
   if (isNewQuery) {
-    gallery.innerHTML = '';
+    gallery.innerHTML = ''; // Очистити галерею, якщо це новий запит
   }
-  gallery.innerHTML += images.map(image => `
+
+  const newImagesHtml = images.map(image => `
     <a href="${image.largeImageURL}" class="gallery-item">
       <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy">
       <div class="info">
@@ -21,6 +23,8 @@ export function renderImages(images, isNewQuery) {
         <p><b>Downloads:</b> ${image.downloads}</p>
       </div>
     </a>`).join('');
+
+  gallery.insertAdjacentHTML('beforeend', newImagesHtml); // Додавання нових зображень до вже існуючих
   
   if (!lightbox) {
     lightbox = new SimpleLightbox('.gallery a', {
@@ -29,14 +33,16 @@ export function renderImages(images, isNewQuery) {
       captionDelay: 250,
     });
   } else {
-    lightbox.refresh();
+    lightbox.refresh(); // Оновлення лайтбокса після додавання нових зображень
   }
+
   const newHeight = gallery.clientHeight;
   window.scrollBy({
     top: newHeight - prevHeight,
     behavior: 'smooth'
   });
 }
+
 
 export function showError(message) {
   iziToast.error({
@@ -58,10 +64,8 @@ export function showLoader() {
 
 export function hideLoader() {
   console.log('-');
-  setTimeout(() => {
-    document.querySelector('.div-loader').classList.add('hidden');
-  },2000);
-}
+  document.querySelector('.div-loader').classList.add('hidden');
+  }
 
 export function toggleLoadMoreButton(show) {
   const loadMoreButton = document.querySelector('.load-more');
