@@ -10,7 +10,7 @@ export function renderImages(images, isNewQuery) {
   const prevHeight = gallery.clientHeight;
 
   if (isNewQuery) {
-    gallery.innerHTML = ''; // Очистити галерею, якщо це новий запит
+    gallery.innerHTML = ''; 
   }
 
   const newImagesHtml = images.map(image => `
@@ -24,7 +24,7 @@ export function renderImages(images, isNewQuery) {
       </div>
     </a>`).join('');
 
-  gallery.insertAdjacentHTML('beforeend', newImagesHtml); // Додавання нових зображень до вже існуючих
+  gallery.insertAdjacentHTML('beforeend', newImagesHtml); 
   
   if (!lightbox) {
     lightbox = new SimpleLightbox('.gallery a', {
@@ -33,7 +33,7 @@ export function renderImages(images, isNewQuery) {
       captionDelay: 250,
     });
   } else {
-    lightbox.refresh(); // Оновлення лайтбокса після додавання нових зображень
+    lightbox.refresh(); 
   }
 
   const newHeight = gallery.clientHeight;
